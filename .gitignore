@@ -4,3 +4,4 @@ videos/
 photos/
 .env
 .DS_Store
+face_trained.yml
