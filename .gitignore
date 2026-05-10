@@ -1,0 +1,6 @@
+__pycache__/
+people/
+videos/
+photos/
+.env
+.DS_Store

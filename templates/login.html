@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | AI Smart Mirror</title>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body id="loginBody" class="simple-login dark-theme">
+<main class="simple-login-wrap">
+<a href="/" class="login-icon" aria-label="Back to dashboard">AI</a>
+
+<div class="simple-login-heading">
+<h1>Welcome back!</h1>
+<p>Login to your account</p>
+</div>
+
+<section class="simple-login-card" aria-label="Login form">
+<h2>Login</h2>
+<p>Secure Access - Welcome back!</p>
+
+<form class="simple-login-form" action="/login" method="post">
+<div class="login-row-label">
+<label for="loginUser">Email or Employee Code</label>
+<button type="reset">Reset</button>
+</div>
+<input id="loginUser" type="text" name="user_id" autocomplete="username">
+
+<div class="login-row-label">
+<label for="loginPass">Password</label>
+</div>
+<input id="loginPass" type="password" name="password" autocomplete="current-password">
+
+<button class="simple-submit" type="submit">Next</button>
+</form>
+</section>
+</main>
+
+<button id="loginThemeToggle" class="corner-theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+<span>&#9788;</span>
+</button>
+
+<script>
+const loginBody = document.getElementById("loginBody");
+const loginThemeToggle = document.getElementById("loginThemeToggle");
+
+// Load theme from localStorage
+const theme = localStorage.getItem('theme') || 'dark';
+if (theme === 'light') {
+    loginBody.classList.remove('dark-theme');
+}
+
+loginThemeToggle.addEventListener("click", () => {
+    loginBody.classList.toggle("dark-theme");
+    const isDark = loginBody.classList.contains('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
+</script>
+</body>
+</html>

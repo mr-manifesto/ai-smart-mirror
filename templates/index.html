@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Smart Mirror</title>
+
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const body = document.getElementById('body');
+    const theme = localStorage.getItem('theme') || 'dark';
+    if (theme === 'dark' && body) {
+        body.classList.add('dark-theme');
+    }
+});
+</script>
+</head>
+
+<body id="body" class="app-shell min-h-screen overflow-x-hidden">
+
+<div id="loader" class="fixed inset-0 flex flex-col items-center justify-center z-50">
+<div class="loader-mark mb-5"></div>
+<h1 class="text-4xl font-extrabold mb-2">AI Smart Mirror</h1>
+<p id="loadingText" class="text-sm">Initializing...</p>
+<div id="progress" class="progress-bar">0%</div>
+</div>
+
+<div id="home" class="min-h-screen">
+<header class="app-header">
+<a href="#home" class="brand" aria-label="AI Smart Mirror home">
+<span class="brand-mark">AI</span>
+<span>
+<strong>AI Smart Mirror</strong>
+<small>Recognition Dashboard</small>
+</span>
+</a>
+
+<nav class="main-nav" aria-label="Primary navigation">
+<a href="#home" class="nav-link">Home</a>
+<a href="#features" class="nav-link">Features</a>
+<a href="#about" class="nav-link">About</a>
+<a href="/login" class="nav-link">Login</a>
+</nav>
+
+<div class="header-actions">
+<div class="clock-block">
+<p id="time"></p>
+<p id="date"></p>
+</div>
+<button id="themeToggle" class="header-theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+<span>&#9788;</span>
+</button>
+</div>
+</header>
+
+<main class="dashboard-layout">
+<section class="camera-panel" aria-label="Live recognition camera">
+<div class="panel-heading">
+<div>
+<p class="eyebrow">Live Camera</p>
+<h1>Face Recognition Console</h1>
+</div>
+<span class="status-pill"><span></span> Active scan</span>
+</div>
+
+<div class="video-container">
+<div id="welcome" class="welcome-badge"></div>
+<video id="video" autoplay muted playsinline></video>
+<canvas id="canvas"></canvas>
+</div>
+</section>
+
+<aside class="insight-panel" aria-label="Smart mirror information">
+<div id="studentCard" class="info-card primary-card">
+<div class="card-title">
+<span class="title-dot"></span>
+<h2>Student Details</h2>
+</div>
+<div class="detail-list">
+<p id="id"></p>
+<p id="name"></p>
+<p id="year"></p>
+<p id="branch"></p>
+<p id="section"></p>
+<p id="attendance"></p>
+</div>
+</div>
+
+<div id="lecturerCard" class="hidden info-card primary-card">
+<div class="card-title">
+<span class="title-dot green"></span>
+<h2>Lecturer Details</h2>
+</div>
+<div class="detail-list">
+<p id="lec_id"></p>
+<p id="lec_name"></p>
+<p id="department"></p>
+<p id="subject"></p>
+<p id="experience"></p>
+</div>
+</div>
+
+<div class="info-card weather-card">
+<div>
+<p class="eyebrow">Weather</p>
+<p id="weather" class="muted-line"></p>
+<p id="temp" class="temperature"></p>
+</div>
+<lottie-player
+src="https://assets10.lottiefiles.com/packages/lf20_t24tpvcu.json"
+background="transparent"
+speed="1"
+style="width: 76px; height: 76px;"
+loop
+autoplay>
+</lottie-player>
+</div>
+
+<div class="info-card quote-card">
+<p class="eyebrow">Quote</p>
+<p id="quote"></p>
+</div>
+</aside>
+</main>
+</div>
+
+<section id="features" class="content-section">
+<div class="section-heading">
+<p class="eyebrow">Capabilities</p>
+<h2>Smart Mirror Features</h2>
+</div>
+
+<div class="feature-grid">
+<article class="feature-card coming-card">
+<span>01</span>
+<h3>Face Recognition</h3>
+<p>Uses the camera feed to detect faces, compare them with trained recognition data, and identify known students or lecturers with minimal manual input.</p>
+</article>
+
+<article class="feature-card coming-card">
+<span>02</span>
+<h3>User Dashboard</h3>
+<p>Shows the recognized person's ID, name, academic information, department details, and attendance in a structured panel that is easy to read during live use.</p>
+</article>
+
+<article class="feature-card coming-card">
+<span>03</span>
+<h3>Live Weather</h3>
+<p>Connects with weather API data to display the current condition and temperature, helping the mirror feel useful beyond recognition alone.</p>
+</article>
+
+<article class="feature-card coming-card">
+<span>04</span>
+<h3>Real-Time Clock</h3>
+<p>Keeps the current time and date visible in the header, so the interface works like a practical smart mirror dashboard throughout the day.</p>
+</article>
+
+<article class="feature-card coming-card">
+<span>05</span>
+<h3>Motivational Quotes</h3>
+<p>Fetches short motivational messages and places them beside the user details, giving the display a more personal and engaging experience.</p>
+</article>
+
+<article class="feature-card coming-card">
+<span>06</span>
+<h3>Smart UI</h3>
+<p>Organizes camera output, user identity, weather, time, and quotes into a clean responsive layout designed for repeated daily interaction.</p>
+</article>
+</div>
+</section>
+
+<section id="about" class="content-section about-section">
+<div class="about-wrap">
+<p class="eyebrow">About</p>
+<h2>About This Project</h2>
+<p>
+AI Smart Mirror is an intelligent system that uses face recognition to identify users and display personalized
+information such as academic details, weather updates, time, and motivational quotes.
+</p>
+<p>
+This project combines Artificial Intelligence, Web Development, and IoT concepts to create a smart interactive
+mirror experience for real-world daily use.
+</p>
+</div>
+</section>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
